@@ -3,12 +3,23 @@
   "name": "1337Coders TabNabber Preventer",
   "version": "0.1",
 
+  "permissions": [
+    "activeTab",
+    "tabs" ,
+    "http://*/*",
+    "https://*/*",
+    "file://*/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["resemble.js", "background.js"]
+  },
   "content_scripts": [
     {
       "matches": [
         "<all_urls>"
       ],
-      "js": ["content.js"]
+      "js": ["resemble.js", "content.js"]
     }
   ]
 }
