@@ -41,7 +41,7 @@ window.onfocus = function(){
 
            var differenceImage = new Image();
            differenceImage.onload = function(){
-             context.clearRect(0, 0, canvasAlreadyInserted.width, canvasAlreadyInserted.height);
+             context.clearRect(0, 0, canvasElement.width, canvasElement.height);
              context.drawImage(differenceImage, 0, 0);
            };
            differenceImage.src = data.getImageDataUrl();
