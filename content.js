@@ -18,19 +18,22 @@ window.onfocus = function(){
          divElement.onclick = function(){
            document.getElementById("1337Overlay").style.display = "none";
          };*/
-         if(data.misMatchPercentage > 0){
+         var canvasAlreadyInserted = document.getElementById("1337Overlay");
+         if(data.misMatchPercentage > 0 && canvasAlreadyInserted == null){
            var canvasElement = document.createElement("canvas");
            canvasElement.id = "1337Overlay";
            canvasElement.style.display = "block";
            canvasElement.style.position = "fixed";
            canvasElement.style.height = "100%";
            canvasElement.style.width = "100%";
+           canvasElement.width = window.innerWidth;
+           canvasElement.height = window.innerHeight;
            canvasElement.style.top = "0";
            canvasElement.style.left = "0";
            canvasElement.style.right = "0";
            canvasElement.style.bottom = "0";
            canvasElement.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-           canvasElement.style.zIndex = "2";
+           canvasElement.style.zIndex = "9001";
            canvasElement.onclick = function(){
              document.getElementById("1337Overlay").style.display = "none";
            };
@@ -38,11 +41,22 @@ window.onfocus = function(){
 
            var differenceImage = new Image();
            differenceImage.onload = function(){
-             context.drawImage(differenceImage, canvasElement.width / 2 - differenceImage.width / 2, canvasElement.height / 2 - differenceImage.height / 2);
+             context.clearRect(0, 0, canvasAlreadyInserted.width, canvasAlreadyInserted.height);
+             context.drawImage(differenceImage, 0, 0);
            };
            differenceImage.src = data.getImageDataUrl();
            //divElement.innerHTML = differenceImage;
            document.body.appendChild(canvasElement);
+        }
+        else if(data.misMatchPercentage > 0){
+          var context = canvasAlreadyInserted.getContext("2d");
+
+          var differenceImage = new Image();
+          differenceImage.onload = function(){
+            context.clearRect(0, 0, canvasAlreadyInserted.width, canvasAlreadyInserted.height);
+            context.drawImage(differenceImage, 0, 0);
+          };
+          differenceImage.src = data.getImageDataUrl();
         }
        });
      }else{
