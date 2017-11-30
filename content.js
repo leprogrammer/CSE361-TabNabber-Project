@@ -30,13 +30,10 @@ window.onfocus = function(){
            canvasElement.height = window.innerHeight;
            canvasElement.style.top = "0";
            canvasElement.style.left = "0";
-           canvasElement.style.right = "0";
-           canvasElement.style.bottom = "0";
-           canvasElement.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
            canvasElement.style.zIndex = "9001";
-           canvasElement.onclick = function(){
-             document.getElementById("1337Overlay").style.display = "none";
-           };
+           //canvasElement.onclick = function(){
+             //document.getElementById("1337Overlay").style.display = "none";
+           //};
            var context = canvasElement.getContext("2d");
 
            var differenceImage = new Image();
@@ -54,9 +51,7 @@ window.onfocus = function(){
           var differenceImage = new Image();
           differenceImage.onload = function(){
             context.clearRect(0, 0, canvasAlreadyInserted.width, canvasAlreadyInserted.height);
-            context.drawImage(differenceImage, 0, 0);
           };
-          differenceImage.src = data.getImageDataUrl();
         }
        });
      }else{

@@ -15,7 +15,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 function takeScreenShotOfTab(){
-    chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true, 'status': "complete"}, function (tabs) {
         currURL = tabs[0].url
         chrome.tabs.captureVisibleTab(null, {}, function (data) {
             //image = new Image()
