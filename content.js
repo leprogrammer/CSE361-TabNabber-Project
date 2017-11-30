@@ -3,23 +3,11 @@ window.onfocus = function(){
      if(response.currURL in response.imageDic){
        var diff = resemble(response.newscreenshot).compareTo(response.imageDic[response.currURL]).ignoreLess().scaleToSameSize().onComplete(function (data){
          console.log(data);
-         /*var divElement = document.createElement("div");
-         divElement.id = "1337Overlay";
-         divElement.style.display = "block";
-         divElement.style.position = "fixed";
-         divElement.style.height = "100%";
-         divElement.style.width = "100%";
-         divElement.style.top = "0";
-         divElement.style.left = "0";
-         divElement.style.right = "0";
-         divElement.style.bottom = "0";
-         divElement.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-         divElement.style.zIndex = "2";
-         divElement.onclick = function(){
-           document.getElementById("1337Overlay").style.display = "none";
-         };*/
          var canvasAlreadyInserted = document.getElementById("1337Overlay");
-         if(data.misMatchPercentage > 0 && canvasAlreadyInserted == null){
+         if(data.misMatchPercentage > 0){
+           if(canvasAlreadyInserted != null){
+             document.body.removeChild(canvasAlreadyInserted)
+           }
            var canvasElement = document.createElement("canvas");
            canvasElement.id = "1337Overlay";
            canvasElement.style.display = "block";
@@ -44,14 +32,9 @@ window.onfocus = function(){
            differenceImage.src = data.getImageDataUrl();
            //divElement.innerHTML = differenceImage;
            document.body.appendChild(canvasElement);
-        }
-        else if(data.misMatchPercentage > 0){
-          var context = canvasAlreadyInserted.getContext("2d");
-
-          var differenceImage = new Image();
-          differenceImage.onload = function(){
-            context.clearRect(0, 0, canvasAlreadyInserted.width, canvasAlreadyInserted.height);
-          };
+           canvasElement.onclick = function(){
+             document.getElementById("1337Overlay").style.display = "none";
+           };
         }
        });
      }else{
