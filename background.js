@@ -11,6 +11,11 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
         });
       });
     }
+    else if (request.mismatch != null){
+      chrome.tabs.getSelected(null, function(tabs){
+        chrome.browserAction.setBadgeText({text: String(request.mismatch), tabId: tabs.id});
+      });
+    }
     return true;
 });
 
@@ -18,8 +23,6 @@ function takeScreenShotOfTab(){
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true, 'status': "complete"}, function (tabs) {
         currURL = tabs[0].url
         chrome.tabs.captureVisibleTab(null, {}, function (data) {
-            //image = new Image()
-            //image.src = data
             images[currURL] = data
         });
     });

@@ -19,9 +19,7 @@ window.onfocus = function(){
            canvasElement.style.top = "0";
            canvasElement.style.left = "0";
            canvasElement.style.zIndex = "9001";
-           //canvasElement.onclick = function(){
-             //document.getElementById("1337Overlay").style.display = "none";
-           //};
+
            var context = canvasElement.getContext("2d");
 
            var differenceImage = new Image();
@@ -36,6 +34,7 @@ window.onfocus = function(){
              document.getElementById("1337Overlay").style.display = "none";
            };
         }
+        chrome.extension.sendMessage({mismatch: data.misMatchPercentage}, function(response){});
        });
      }else{
        console.log("no image taken yet")
