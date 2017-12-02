@@ -1,3 +1,4 @@
+
 window.onfocus = function(){
    chrome.extension.sendMessage({name: 'currScreenshot'}, function(response) {
      if(response.currURL in response.imageDic){
@@ -32,6 +33,7 @@ window.onfocus = function(){
            document.body.appendChild(canvasElement);
            canvasElement.onclick = function(){
              document.getElementById("1337Overlay").style.display = "none";
+             chrome.extension.sendMessage({name: 'restartInterval'});
            };
         }
         chrome.extension.sendMessage({mismatch: data.misMatchPercentage}, function(response){});

@@ -1,17 +1,33 @@
 var currURL
 var images = {}
+var screenshotInterval
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.name == 'currScreenshot') {
       chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
           currURL = tabs[0].url
+          if(!(currURL in images)){
+            console.log("no screen")
+            chrome.tabs.captureVisibleTab(null, {}, function (data) {
+                images[currURL] = data
+            });
+          }
           chrome.tabs.captureVisibleTab(null, null, function(data) {
-            console.log(data)
-              sendResponse({newscreenshot: data, imageDic: images, currURL: currURL});
+            sendResponse({newscreenshot: data, imageDic: images, currURL: currURL, screenshotInterval: screenshotInterval});
         });
       });
     }
+    else if(request.name == "restartInterval"){
+      console.log("WE GETTING THIS")
+      takeScreenShotOfTab()
+      screenshotInterval = setInterval(takeScreenShotOfTab, 5000);
+    }else if(request.mismatch == null){
+      takeScreenShotOfTab();
+    }
     else if (request.mismatch != null){
+      if(request.mismatch > 0){
+        clearInterval(screenshotInterval);
+      }
       chrome.tabs.getSelected(null, function(tabs){
         var colorString = "#FFFFFF";
         var mismatchNumber = parseFloat(request.mismatch);
@@ -40,6 +56,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 function takeScreenShotOfTab(){
+  console.log("here")
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true, 'status': "complete"}, function (tabs) {
         currURL = tabs[0].url
         chrome.tabs.captureVisibleTab(null, {}, function (data) {
@@ -50,4 +67,4 @@ function takeScreenShotOfTab(){
 
 
 takeScreenShotOfTab();
-setInterval(takeScreenShotOfTab, 5000);
+screenshotInterval = setInterval(takeScreenShotOfTab, 10000);
