@@ -6,21 +6,16 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.name == 'currScreenshot') {
       chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
           currURL = tabs[0].url
-          if(!(currURL in images)){
-            console.log("no screen")
-            chrome.tabs.captureVisibleTab(null, {}, function (data) {
-                images[currURL] = data
-            });
-          }
           chrome.tabs.captureVisibleTab(null, null, function(data) {
             sendResponse({newscreenshot: data, imageDic: images, currURL: currURL, screenshotInterval: screenshotInterval});
         });
       });
     }
     else if(request.name == "restartInterval"){
-      console.log("WE GETTING THIS")
       takeScreenShotOfTab()
       screenshotInterval = setInterval(takeScreenShotOfTab, 5000);
+    }else if(request.name == "getFirstScreen"){
+      takeScreenShotOfTab();
     }else if(request.mismatch == null){
       takeScreenShotOfTab();
     }
@@ -56,7 +51,6 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 function takeScreenShotOfTab(){
-  console.log("here")
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true, 'status': "complete"}, function (tabs) {
         currURL = tabs[0].url
         chrome.tabs.captureVisibleTab(null, {}, function (data) {

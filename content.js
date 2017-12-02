@@ -1,9 +1,8 @@
-
+chrome.extension.sendMessage({name: 'getFirstScreen'});
 window.onfocus = function(){
    chrome.extension.sendMessage({name: 'currScreenshot'}, function(response) {
      if(response.currURL in response.imageDic){
        var diff = resemble(response.newscreenshot).compareTo(response.imageDic[response.currURL]).ignoreLess().scaleToSameSize().onComplete(function (data){
-         console.log(data);
          var canvasAlreadyInserted = document.getElementById("1337Overlay");
          if(data.misMatchPercentage > 0){
            if(canvasAlreadyInserted != null){
