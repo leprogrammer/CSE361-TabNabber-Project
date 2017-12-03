@@ -43,7 +43,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
           colorString = "#F00000";
         }
 
-        chrome.browserAction.setBadgeText({text: String(request.mismatch), tabId: tabs.id});
+        chrome.browserAction.setBadgeText({text: String(mismatchNumber), tabId: tabs.id});
         chrome.browserAction.setBadgeBackgroundColor({color: String(colorString), tabId: tabs.id});
       });
     }

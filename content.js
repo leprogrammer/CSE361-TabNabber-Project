@@ -1,9 +1,22 @@
 chrome.extension.sendMessage({name: 'getFirstScreen'});
+resemble.outputSettings({
+  errorColor: {
+    red: 255,
+    green: 0,
+    blue: 51
+  },
+  errorType: 'movement',
+  transparency: 0.25,
+  largeImageThreshold: 1200,
+  useCrossOrigin: false,
+  outputDiff: true
+});
 window.onfocus = function(){
    chrome.extension.sendMessage({name: 'currScreenshot'}, function(response) {
      if(response.currURL in response.imageDic){
        var diff = resemble(response.newscreenshot).compareTo(response.imageDic[response.currURL]).ignoreLess().scaleToSameSize().onComplete(function (data){
          var canvasAlreadyInserted = document.getElementById("1337Overlay");
+         console.log(data)
          if(data.misMatchPercentage > 0){
            if(canvasAlreadyInserted != null){
              document.body.removeChild(canvasAlreadyInserted)
