@@ -7,7 +7,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
       chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
           currURL = tabs[0].url
           chrome.tabs.captureVisibleTab(null, null, function(data) {
-            sendResponse({newscreenshot: data, imageDic: images, currURL: currURL, screenshotInterval: screenshotInterval});
+            sendResponse({newscreenshot: data, imageDic: images, currURL: currURL});
         });
       });
     }
