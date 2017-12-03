@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "1337Coders TabNabber Preventer",
-  "version": "0.1",
+  "version": "1.337",
 
   "browser_action": {
     "default_title": "1337Coders"

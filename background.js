@@ -20,7 +20,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
       takeScreenShotOfTab();
     }
     else if (request.mismatch != null){
-      if(request.mismatch > 0){
+      if(parseFloat(request.mismatch) > 0){
         clearInterval(screenshotInterval);
       }
       chrome.tabs.getSelected(null, function(tabs){
@@ -53,6 +53,8 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 function takeScreenShotOfTab(){
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true, 'status': "complete"}, function (tabs) {
         currURL = tabs[0].url
+        chrome.browserAction.setBadgeText({text: ""});
+        chrome.browserAction.setBadgeBackgroundColor({color: "#FFFFFF"});
         chrome.tabs.captureVisibleTab(null, {}, function (data) {
             images[currURL] = data
         });
